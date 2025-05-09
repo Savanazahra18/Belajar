@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Detection</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1/dist/face-api.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container" id="loginPage">
+        <div class="auth-box">
+            <h1><i class="fas fa-smile-beam"></i> Welcome Back</h1>
+            <form id="loginForm" onsubmit="return login(event)">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Login <i class="fas fa-arrow-right"></i></button>
+            </form>
+            <p class="auth-switch">Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+        </div>
+    </div>
+
+    <div class="auth-container hidden" id="registerPage">
+        <div class="auth-box">
+            <h1><i class="fas fa-user-plus"></i> Create Account</h1>
+            <form id="registerForm" onsubmit="return register(event)">
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="regUsername" placeholder="Username" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit">Register <i class="fas fa-user-plus"></i></button>
+            </form>
+            <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+        </div>
+    </div>
+
+    <div class="main-container hidden" id="mainPage">
+        <nav class="top-nav">
+            <h1><i class="fas fa-camera"></i> Emotion Detection</h1>
+            <button onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </nav>
+        <div class="content">
+            <div class="camera-controls">
+                <button id="startCamera" class="camera-btn">
+                    <i class="fas fa-video"></i> Aktifkan Kamera
+                </button>
+                <button id="stopCamera" class="camera-btn hidden">
+                    <i class="fas fa-video-slash"></i> Matikan Kamera
+                </button>
+            </div>
+            <div class="dashboard">
+                <div class="camera-section">
+                    <div class="video-container hidden" id="videoContainer">
+                        <h2><i class="fas fa-camera"></i> Camera Feed</h2>
+                        <div class="video-wrapper">
+                            <video id="video" autoplay muted></video>
+                            <div class="camera-overlay hidden" id="cameraOverlay">
+                                <div class="overlay-text">
+                                    <i class="fas fa-camera-slash"></i>
+                                    <p>Camera is inactive</p>
+                                    <p class="overlay-subtext">Click 'Aktifkan Kamera' to start</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="analysis-section">
+                    <div class="emotion-status">
+                        <h2><i class="fas fa-face-smile"></i> Real-time Analysis</h2>
+                        <div class="emotion-indicators">
+                            <div class="emotion-indicator">
+                                <i class="fas fa-face-laugh-beam"></i>
+                                <span>Senang</span>
+                                <div class="progress-bar">
+                                    <div class="progress" id="happyProgress"></div>
+                                </div>
+                                <span class="percentage" id="happyPercentage">0%</span>
+                            </div>
+                            <div class="emotion-indicator">
+                                <i class="fas fa-face-sad-tear"></i>
+                                <span>Sedih</span>
+                                <div class="progress-bar">
+                                    <div class="progress" id="sadProgress"></div>
+                                </div>
+                                <span class="percentage" id="sadPercentage">0%</span>
+                            </div>
+                            <div class="emotion-indicator">
+                                <i class="fas fa-face-angry"></i>
+                                <span>Marah</span>
+                                <div class="progress-bar">
+                                    <div class="progress" id="angryProgress"></div>
+                                </div>
+                                <span class="percentage" id="angryPercentage">0%</span>
+                            </div>
+                        </div>
+                        <div class="dominant-emotion">
+                            <h3>Emosi Saat Ini:</h3>
+                            <div class="mood-display">
+                                <i id="moodIcon" class="fas fa-face-meh"></i>
+                                <span id="emotion">Menunggu Kamera...</span>
+                            </div>
+                        </div>
+                        <div class="emotion-history" id="emotionHistory">
+                            <h3>Riwayat Emosi</h3>
+                            <div class="emotion-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
